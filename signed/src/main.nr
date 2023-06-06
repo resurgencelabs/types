@@ -12,6 +12,12 @@ fn main(x : u32, y : pub u32) {
     constrain r.value == (x + 2*y);
     let s = signed::subtractSigned(r, w);
     constrain s.value == (x + y);
+    let t = signed::modSigned(signed::negativeSigned(p), signed::negativeSigned(w));
+    constrain t.value == x;
+    constrain t.sign == false;
+    
+    let cmp = signed::compareSigned(w, r);
+    constrain cmp == 2;
 }
 
 #[test]
