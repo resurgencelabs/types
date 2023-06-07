@@ -121,6 +121,28 @@ fn modSigned(s1: Signed, s2: Signed) -> Signed {
     }
 }
 
+fn squareSigned(s: Signed) -> Signed {
+
+    
+        let sn = Signed {
+            sign: true,
+            value: (s.value*s.value),
+        };
+        sn
+    
+}
+
+fn cubeSigned(s: Signed) -> Signed {
+
+    
+        let sn = Signed {
+            sign: s.sign,
+            value: (s.value*s.value*s.value),
+        };
+        sn
+    
+}
+
 fn negativeSigned(s: Signed) -> Signed {
     let sn = Signed{
         sign: !s.sign,
