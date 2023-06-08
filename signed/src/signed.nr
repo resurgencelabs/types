@@ -1,3 +1,9 @@
+global MAX: Signed = Signed { sign: true, value: 4294967295 };
+global MIN: Signed = Signed { sign: false, value: 4294967295 };
+global ZERO: Signed = Signed { sign: true, value: 0 };
+global ONE: Signed = Signed { sign: true, value: 1 };
+global NEGATIVE_ONE: Signed = Signed { sign: false, value: 1 };
+
 struct Signed {
     sign: bool,
     value: u32,
