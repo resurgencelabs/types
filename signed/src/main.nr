@@ -1,4 +1,5 @@
 mod signed;
+use dep::std;
 
 fn main(x : u32, y : pub u32) {
     let z = signed::toSigned(true, x+y);
@@ -18,6 +19,30 @@ fn main(x : u32, y : pub u32) {
     
     let cmp = signed::compareSigned(w, r);
     constrain cmp == 2;
+
+    let mut count = 0;
+    let mut cnt = 0;
+    let mut iter = 0;
+
+    for i in 1..10 {
+        if (iter < 25){
+            for j in 1..5{
+                count = count + 1;
+                iter += 1;
+                cnt = j;
+                if (i < 25){
+                    cnt = i;
+                }
+            };
+            
+        }
+        
+        
+    };
+    //constrain count == 100;
+
+    std::println(count);    
+      
 }
 
 #[test]
