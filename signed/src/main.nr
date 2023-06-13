@@ -20,6 +20,12 @@ fn main(x : u32, y : pub u32) {
     let cmp = signed::compareSigned(w, r);
     constrain cmp == 2;
 
+    let inc = signed::incrSigned(w);
+    constrain inc.value == (y+1);
+
+    let dec = signed::decrSigned(w);
+    constrain dec.value == (y-1);
+
     let mut count = 0;
     let mut cnt = 0;
     let mut iter = 0;

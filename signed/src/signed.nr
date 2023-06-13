@@ -157,6 +157,81 @@ fn negativeSigned(s: Signed) -> Signed {
     sn
 }
 
+fn incrSigned(s: Signed) -> Signed {
+    if s.sign {
+
+        let sn = Signed {
+            sign: true,
+            value: s.value + 1,
+        };
+        sn
+    }
+    else {
+        if s.value == 1 {
+            let sn = Signed {
+                sign: true,
+                value: 0,
+            };
+            sn
+        }
+        else {
+            if (s.value == 0){
+                    let sn = Signed {
+                    sign: true,
+                    value: 1,
+                };
+                sn
+            }
+            else {
+                let sn = Signed {
+                    sign: false,
+                    value: s.value - 1,
+                };
+                sn
+            }
+            
+        }
+    }
+}
+
+
+fn decrSigned(s: Signed) -> Signed {
+    if !s.sign {
+
+        let sn = Signed {
+            sign: false,
+            value: s.value + 1,
+        };
+        sn
+    }
+    else {
+        if s.value == 1 {
+            let sn = Signed {
+                sign: true,
+                value: 0,
+            };
+            sn
+        }
+        else {
+            if s.value == 0 {
+                let sn = Signed {
+                    sign: false,
+                    value: 1,
+                };
+                sn
+            }
+            else {
+                let sn = Signed {
+                    sign: true,
+                    value: s.value - 1,
+                };
+                sn
+            }
+            
+        }
+    }
+}
+
 fn aValSigned(s: Signed) -> u32 {
     s.value
 }
