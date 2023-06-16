@@ -19,13 +19,8 @@ fn main(x : u32, y : pub u32) {
     let z2 = fraction::toFraction(true, 2*x, 2*y);
     let cmp2 = fraction::compareFraction(z, z2);
     constrain cmp2 == 0;
-    let a = 3;
-    let b = 5;
-    let mut c = 3;
-    if (a == 3) & (b == 5){
-        c = 1;
-    }
-    std::println(c);
+    //let red = fraction::reduceFraction(z);
+    //constrain red.num == 3;
 
     
 }
