@@ -202,3 +202,23 @@ fn cubeFraction(f: Fraction) -> Fraction {
     };
     fr
 }
+
+fn incrFraction(f: Fraction) -> Fraction {
+    let inc = Fraction {
+        sign: true,
+        num: 1,
+        den: 1,
+    };
+    let fr = addFraction(f, inc);
+    fr
+}
+
+fn decrFraction(f: Fraction) -> Fraction {
+    let dec = Fraction {
+        sign: true,
+        num: 1,
+        den: 1,
+    };
+    let fr = subtractFraction(f, dec);
+    fr
+}

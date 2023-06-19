@@ -21,6 +21,8 @@ fn main(x : u32, y : pub u32) {
     constrain cmp2 == 0;
     //let red = fraction::reduceFraction(z);
     //constrain red.num == 3;
+    let ic = fraction::incrFraction(z);
+    constrain ic.num == (x+y);
 
     
 }
