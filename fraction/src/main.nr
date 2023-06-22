@@ -3,26 +3,27 @@ use dep::std;
 
 fn main(x : u32, y : pub u32) {
     let z = fraction::toFraction(true, x, y);
-    constrain y == z.den;
+    assert (y == z.den);
     let zinv = fraction::toFraction(false, y, x);
-    constrain y == zinv.num;
+    assert (y == zinv.num);
     let w = fraction::multiplyFraction(z, zinv);
-    constrain w.den == w.num;
+    assert (w.den == w.num);
     let p = fraction::addFraction(z, zinv);
-    constrain !p.sign;
-    constrain p.num == (y*y - x*x);
+    assert (!p.sign);
+    assert (p.num == (y*y - x*x));
     let q = fraction::subtractFraction(z, zinv);
-    constrain q.sign;
-    constrain q.num == (y*y + x*x);
+    assert (q.sign);
+    assert (q.num == (y*y + x*x));
     let cmp = fraction::compareFraction(q, z);
-    constrain cmp == 1;
+    assert (cmp == 1);
     let z2 = fraction::toFraction(true, 2*x, 2*y);
     let cmp2 = fraction::compareFraction(z, z2);
-    constrain cmp2 == 0;
+    assert (cmp2 == 0);
     //let red = fraction::reduceFraction(z);
-    //constrain red.num == 3;
+    //assert (red.num == 3);
+    //commented out because too time draining
     let ic = fraction::incrFraction(z);
-    constrain ic.num == (x+y);
+    assert (ic.num == (x+y));
 
     
 }

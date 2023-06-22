@@ -3,28 +3,28 @@ use dep::std;
 
 fn main(x : u32, y : pub u32) {
     let z = signed::toSigned(true, x+y);
-    constrain x+y == z.value;
+    assert (x+y == z.value);
     let w = signed::toSigned(true, y);
     let p = signed::addSigned(w, z);
-    constrain p.value == (x + y + y);
+    assert (p.value == (x + y + y));
     let q = signed::multiplySigned(w, p);
-    constrain q.value == (x*y + y*y*2);
+    assert (q.value == (x*y + y*y*2));
     let r = signed::divideSigned(q, w);
-    constrain r.value == (x + 2*y);
+    assert (r.value == (x + 2*y));
     let s = signed::subtractSigned(r, w);
-    constrain s.value == (x + y);
+    assert (s.value == (x + y));
     let t = signed::modSigned(signed::negativeSigned(p), signed::negativeSigned(w));
-    constrain t.value == x;
-    constrain t.sign == false;
+    assert (t.value == x);
+    assert (t.sign == false);
     
     let cmp = signed::compareSigned(w, r);
-    constrain cmp == 2;
+    assert (cmp == 2);
 
     let inc = signed::incrSigned(w);
-    constrain inc.value == (y+1);
+    assert (inc.value == (y+1));
 
     let dec = signed::decrSigned(w);
-    constrain dec.value == (y-1);
+    assert (dec.value == (y-1));
 
     let mut count = 0;
     let mut cnt = 0;
@@ -45,7 +45,7 @@ fn main(x : u32, y : pub u32) {
         
         
     };
-    //constrain count == 100;
+    
 
     std::println(count);    
       
