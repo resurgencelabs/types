@@ -5,7 +5,7 @@ The current types maintained by Resurgence Labs are:
 
 1. signed integers
 2. fractions
-
+3. result (awaiting Noir bug https://github.com/noir-lang/noir/issues/1367 clearance)
 
 We will add more types as Noir progresses. 
 
