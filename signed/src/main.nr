@@ -26,28 +26,21 @@ fn main(x : u32, y : pub u32) {
     let dec = signed::decrSigned(w);
     assert (dec.value == (y-1));
 
-    let mut count = 0;
-    let mut cnt = 0;
-    let mut iter = 0;
+      
 
-    for i in 1..10 {
-        if (iter < 25){
-            for j in 1..5{
-                count = count + 1;
-                iter += 1;
-                cnt = j;
-                if (i < 25){
-                    cnt = i;
-                }
-            };
-            
-        }
-        
-        
-    };
+    let n1 = signed::toSigned(true, 23);
+    let n2 = signed::toSigned(false, 23);
+    let ls1 = signed::leftShiftSigned(n1, 2);
+    let ls2 = signed::leftShiftSigned(n2, 2);
+    assert (ls1.value == 92);
+    assert (ls1.value == ls2.value);
+
+    let rs1 = signed::rightShiftSigned(n1, 2);
+    let rs2 = signed::rightShiftSigned(n2, 2);
+    assert (rs1.value == 5);
+    assert (rs2.value == 6);
+
     
-
-    std::println(count);    
       
 }
 

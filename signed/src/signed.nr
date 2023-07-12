@@ -3,6 +3,7 @@ global MIN: Signed = Signed { sign: false, value: 4294967295 };
 global ZERO: Signed = Signed { sign: true, value: 0 };
 global ONE: Signed = Signed { sign: true, value: 1 };
 global NEGATIVE_ONE: Signed = Signed { sign: false, value: 1 };
+use dep::std;
 
 struct Signed {
     sign: bool,
@@ -280,3 +281,64 @@ fn compareSigned(s1: Signed, s2: Signed) -> u32 {
     }
 }
 
+
+fn leftShiftSigned(s: Signed, n: u32) -> Signed {
+    assert (n < 16);
+    let mut pow = 1;
+    for i in 0..16{
+        let mut j = i as u32;
+        if j < n {
+            pow = pow * 2;
+        }
+    };
+    if n == 0{
+        s
+    }
+    else {
+        let sn = Signed {
+            sign: s.sign,
+            value: s.value *  pow,
+        };
+        sn
+    }
+    
+}
+
+fn rightShiftSigned(s: Signed, n: u32) -> Signed {
+    assert (n < 16);
+    let mut pow = 1;
+    for i in 0..16{
+        let mut j = i as u32;
+        if j < n {
+            pow = pow * 2;
+        }
+    };
+    let mut val_final = s.value/pow;
+    let mut rem = 0;
+    if val_final * pow != s.value {
+        rem = 1;
+    }
+    
+    
+    if s.sign {
+        if (rem == 1) & (val_final != 0){
+            val_final -= 0;
+        }
+    }
+    else {
+        if (rem == 1) {
+            val_final += 1;
+        }
+    }
+    if n == 0{
+        s
+    }
+    else {
+        let sn = Signed {
+            sign: s.sign,
+            value: val_final,
+        };
+        sn
+    }
+    
+}
