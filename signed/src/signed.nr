@@ -281,7 +281,8 @@ fn compareSigned(s1: Signed, s2: Signed) -> u32 {
     }
 }
 
-
+// the max shift has been kept to 16 for efficiency reasons, as well as
+// lack of realistic use case beyond that
 fn leftShiftSigned(s: Signed, n: u32) -> Signed {
     assert (n < 16);
     let mut pow = 1;
@@ -304,6 +305,8 @@ fn leftShiftSigned(s: Signed, n: u32) -> Signed {
     
 }
 
+// the max shift has been kept to 16 for efficiency reasons, as well as
+// lack of realistic use case beyond that
 fn rightShiftSigned(s: Signed, n: u32) -> Signed {
     assert (n < 16);
     let mut pow = 1;
