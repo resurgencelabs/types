@@ -9,6 +9,12 @@ fn main(x : u32, y : pub Field) {
     assert (!option::isNull(o2));
 
     assert (!option::intersectionNull(o1, o1));
+
+
+    let nullOpt: option::Option<u32> = option::makeNull();
+
+    assert (nullOpt.else_value == 0);
+    assert (nullOpt.null);
     
     
 
