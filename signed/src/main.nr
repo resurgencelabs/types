@@ -16,6 +16,9 @@ fn main(x : u32, y : pub u32) {
     let t = signed::modSigned(signed::negativeSigned(p), signed::negativeSigned(w));
     assert (t.value == x);
     assert (t.sign == false);
+
+    let t2 = signed::modSigned(w, signed::toSigned(true, 2));
+    assert (t2.value == 1);
     
     let cmp = signed::compareSigned(w, r);
     assert (cmp == 2);
