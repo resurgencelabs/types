@@ -1,0 +1,6 @@
+[package]
+authors = [""]
+compiler_version = "0.7.1"
+
+[dependencies]
+fraction = { tag = "v1.0.1", git = "https://github.com/resurgencelabs/fraction" }
