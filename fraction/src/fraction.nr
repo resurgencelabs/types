@@ -222,3 +222,13 @@ fn decrFraction(f: Fraction) -> Fraction {
     let fr = subtractFraction(f, dec);
     fr
 }
+
+
+fn isInteger(f: Fraction) -> bool {
+    if f.den == 1 {
+        true
+    }
+    else {
+        false
+    }
+}

@@ -29,9 +29,9 @@ fn main(x : u32, y : pub u32) {
 }
 
 #[test]
-fn test_main() {
-    main(1, 2);
+fn test_is_integer() {
+    let f = fraction::toFraction(true, 3, 1);
+    assert (fraction::isInteger(f));
     
-    // Uncomment to make test fail
-    // main(1, 1);
+    
 }
