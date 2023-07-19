@@ -60,3 +60,38 @@ fn subtractVector(v1: Phy_Vector, v2: Phy_Vector) -> Phy_Vector {
     };
     vc
 }
+
+fn scProductVector(v1: Phy_Vector, v2: Phy_Vector) -> fraction::Fraction {
+    let s1 = fraction::multiplyFraction(v1.i, v2.i);
+    let s2 = fraction::multiplyFraction(v1.j, v2.j);
+    let s3 = fraction::multiplyFraction(v1.k, v2.k);
+    let s4 = fraction::addFraction(s1, s2);
+    let s = fraction::addFraction(s3, s4);
+    s
+}
+
+fn vecProductVector(v1: Phy_Vector, v2: Phy_Vector) -> Phy_Vector {
+    //   i    j    k
+    // v1.i v1.j v1.k
+    // v2.i v2.j v2.k
+    let m11 = fraction::multiplyFraction(v1.j, v2.k);
+    let m12 = fraction::multiplyFraction(v1.k, v2.j);
+    let m21 = fraction::multiplyFraction(v1.k, v2.i);
+    let m22 = fraction::multiplyFraction(v1.i, v2.k);
+    let m31 = fraction::multiplyFraction(v1.i, v2.j);
+    let m32 = fraction::multiplyFraction(v1.j, v2.i);
+    let d1 = fraction::subtractFraction(m11, m12);
+    let d2 = fraction::subtractFraction(m21, m22);
+    let d3 = fraction::subtractFraction(m31, m32);
+    let v = Phy_Vector {
+        i: d1,
+        j: d2,
+        k: d3,
+    };
+    v
+}
+
+fn sqModulusVector(v: Phy_Vector) -> fraction::Fraction {
+    let s = scProductVector(v, v);
+    s
+}
