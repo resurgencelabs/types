@@ -114,14 +114,14 @@ fn modSigned(s1: Signed, s2: Signed) -> Signed {
             
             let sn = Signed {
                 sign: false,
-                value: ((s1.value%s2.value)-1),
+                value: (s2.value - (s1.value%s2.value)),
             };
             sn
         }
         else {
             let sn = Signed {
                 sign: true,
-                value: ((s1.value%s2.value)-1),
+                value: (s2.value - (s1.value%s2.value)),
             };
             sn
         }
@@ -245,17 +245,11 @@ fn signSigned(s: Signed) -> bool {
 // if a < b return 2
 // if a == b return 0
 fn compareSigned(s1: Signed, s2: Signed) -> u32 {
-    if (s1.sign != s2.sign){
-        if (s1.sign){
-            1
-        }
-        else {
-            2
-        }
+    if ((s1.value == s2.value) & (s1.value == 0)){
+        0
     }
     else {
-        
-        if (s1.value > s2.value){
+        if (s1.sign != s2.sign){
             if (s1.sign){
                 1
             }
@@ -264,21 +258,33 @@ fn compareSigned(s1: Signed, s2: Signed) -> u32 {
             }
         }
         else {
-            if (s1.value != s2.value){
+            
+            if (s1.value > s2.value){
                 if (s1.sign){
-                    2
+                    1
                 }
                 else {
-                    1
+                    2
                 }
             }
             else {
-                0
+                if (s1.value != s2.value){
+                    if (s1.sign){
+                        2
+                    }
+                    else {
+                        1
+                    }
+                }
+                else {
+                    0
+                }
+                
             }
             
         }
-        
     }
+    
 }
 
 // the max shift has been kept to 16 for efficiency reasons, as well as

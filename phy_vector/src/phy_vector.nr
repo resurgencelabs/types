@@ -95,3 +95,17 @@ fn sqModulusVector(v: Phy_Vector) -> fraction::Fraction {
     let s = scProductVector(v, v);
     s
 }
+
+fn isEqual(v1: Phy_Vector, v2: Phy_Vector) -> bool {
+    let flagi = fraction::compareFraction(v1.i, v2.i);
+    let flagj = fraction::compareFraction(v1.j, v2.j);
+    let flagk = fraction::compareFraction(v1.k, v2.k);
+    let flag = ((flagi + flagj) + flagk);
+    if (flag == 0){
+        true
+    }
+    else {
+        false
+    }
+    
+}

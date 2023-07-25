@@ -1,3 +1,4 @@
+use dep::std;
 global MAX: Fraction = Fraction { sign: true, num: 4294967295, den: 1 };
 global MIN: Fraction = Fraction { sign: false, num: 4294967295, den: 1 };
 global ZERO: Fraction = Fraction { sign: true, num: 0, den: 1 };
@@ -23,7 +24,7 @@ fn toFraction(s: bool, n: u32, d: u32) -> Fraction {
 
 
 fn invertFraction(f: Fraction) -> Fraction {
-    assert (f.den != 0);
+    assert (f.num != 0);
     let fr = Fraction {
         sign: f.sign,
         num: f.den,
@@ -149,17 +150,11 @@ fn subtractFraction(f1: Fraction, f2: Fraction) -> Fraction {
 // if a < b return 2
 // if a == b return 0
 fn compareFraction(f1: Fraction, f2: Fraction) -> u32 {
-    if (f1.sign != f2.sign){
-        if (f1.sign){
-            1
-        }
-        else {
-            2
-        }
+    if ((f1.num == f2.num) & (f1.num == 0)){
+        0
     }
     else {
-        
-        if ((f1.num*f2.den) > (f2.num*f2.den)){
+        if (f1.sign != f2.sign){
             if (f1.sign){
                 1
             }
@@ -168,21 +163,34 @@ fn compareFraction(f1: Fraction, f2: Fraction) -> u32 {
             }
         }
         else {
-            if ((f1.num*f2.den) != (f2.num*f1.den)){
+            
+            if ((f1.num*f2.den) > (f2.num*f1.den)){
                 if (f1.sign){
-                    2
+                    1
                 }
                 else {
-                    1
+                    2
                 }
             }
             else {
-                0
+                
+                if ((f1.num*f2.den) != (f2.num*f1.den)){
+                    if (f1.sign){
+                        2
+                    }
+                    else {
+                        1
+                    }
+                }
+                else {
+                    0
+                }
+                
             }
             
         }
-        
     }
+    
 }
 
 fn squareFraction(f: Fraction) -> Fraction {
