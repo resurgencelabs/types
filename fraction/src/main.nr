@@ -9,6 +9,7 @@ fn main(x : u32, y : pub u32) {
     assert (y == zinv.num);
     //let w = fraction::multiplyFraction(z, zinv);
     //assert (w.den == w.num);
+    
     //let p = fraction::addFraction(z, zinv);
     //assert (!p.sign);
     //assert (p.num == (y*y - x*x));
@@ -44,5 +45,85 @@ fn test_is_integer() {
     let f = fraction::toFraction(true, 3, 1);
     assert (fraction::isInteger(f));
     
+    
+}
+
+
+#[test]
+fn test_mul() {
+    let f1 = fraction::toFraction(true, 3, 5);
+    let f2 = fraction::toFraction(true, 5, 3);
+    let m = fraction::multiplyFraction(f1, f2);
+    
+    assert (m.num == m.den);
+}
+
+
+#[test]
+fn test_mul_large() {
+    let f1 = fraction::toFraction(true, 3000000, 50);
+    let f2 = fraction::toFraction(true, 50000, 3000);
+    let m = fraction::multiplyFraction(f1, f2);
+    assert (m.num < 4000000000);
+    assert (m.den < 4000000000);
+}
+
+#[test]
+fn test_mul_large2() {
+    let f1 = fraction::toFraction(true, 33333333, 5);
+    let f2 = fraction::toFraction(true, 500000, 33333333);
+    let m = fraction::multiplyFraction(f1, f2);
+    assert (m.num < 4000000000);
+    assert (m.den < 4000000000);
+}
+
+
+#[test]
+fn test_div() {
+    let f1 = fraction::toFraction(true, 3, 5);
+    let f2 = fraction::toFraction(true, 1, 1);
+    let d = fraction::divideFraction(f1, f2);
+    
+    assert (d.num == f1.num);
+}
+
+
+#[test]
+fn test_div_large() {
+    let f1 = fraction::toFraction(true, 3000000, 50);
+    let f2 = fraction::toFraction(true, 50000, 300000);
+    let d = fraction::divideFraction(f1, f2);
+    assert (d.num < 4000000000);
+    assert (d.den < 4000000000);
+}
+
+#[test]
+fn test_add_large2() {
+    let f1 = fraction::toFraction(true, 33333333, 5);
+    let f2 = fraction::toFraction(true, 500000, 33333333);
+    let a = fraction::addFraction(f1, f2);
+    assert (a.num < 2000000000);
+    assert (a.den < 2000000000);
+    let x = a.den;
+    std::println(x);
+}
+
+
+#[test]
+fn test_split() {
+    let f = fraction::toFraction(true, 7, 3);
+    let sp = fraction::split(f);
+    assert (fraction::isInteger(sp.0));
+    assert (sp.1.den == 3);
+    
+}
+
+
+#[test]
+fn test_split2() {
+    let f = fraction::toFraction(false, 7, 3);
+    let sp = fraction::split(f);
+    assert (fraction::isInteger(sp.0));
+    assert (sp.1.num == 1);
     
 }

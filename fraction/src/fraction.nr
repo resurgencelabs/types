@@ -1,6 +1,6 @@
 use dep::std;
-global MAX: Fraction = Fraction { sign: true, num: 4294967295, den: 1 };
-global MIN: Fraction = Fraction { sign: false, num: 4294967295, den: 1 };
+global MAX: Fraction = Fraction { sign: true, num: 3050913689, den: 1 };
+global MIN: Fraction = Fraction { sign: false, num: 3050913689, den: 1 };
 global ZERO: Fraction = Fraction { sign: true, num: 0, den: 1 };
 global ONE: Fraction = Fraction { sign: true, num: 1, den: 1 };
 global NEGATIVE_ONE: Fraction = Fraction { sign: false, num: 1, den: 1 };
@@ -34,21 +34,38 @@ fn invertFraction(f: Fraction) -> Fraction {
 }
 
 fn multiplyFraction(f1: Fraction, f2: Fraction) -> Fraction {
+    let mut a = f1;
+    let mut b = f2;
+    if ((f1.num*f2.num > 2000000000) | (f1.den*f2.den > 2000000000)) {
+        a = reduceFraction(a);
+        b = reduceFraction(b);
+    }
+    let mut c = a;
+    let mut d = b;
+    if ((a.num*b.num > 2000000000) | (a.den*a.den > 2000000000)) {
+        c = Fraction{ sign: a.sign, num: a.num, den: b.den};
+        d = Fraction{ sign: b.sign, num: b.num, den: a.den};
+        c = reduceFraction(c);
+        d = reduceFraction(d);
+    }
+    
     let fr = Fraction {
-        sign: (f1.sign == f2.sign),
-        num: f1.num*f2.num,
-        den: f1.den*f2.den,
+        sign: (c.sign == d.sign),
+        num: c.num*d.num,
+        den: c.den*d.den,
     };
     fr
 }
 
 fn divideFraction(f1: Fraction, f2: Fraction) -> Fraction {
     assert (f2.num != 0);
-    let fr = Fraction {
-        sign: (f1.sign == f2.sign),
-        num: f1.num*f2.den,
-        den: f1.den*f2.num,
+    let f3 = Fraction {
+        sign: f2.sign,
+        num: f2.den,
+        den: f2.num,
     };
+    let fr = multiplyFraction(f1, f3);
+    
     fr
 }
 
@@ -87,28 +104,49 @@ fn reduceFraction(f: Fraction) -> Fraction {
 }
 
 fn addFraction(f1: Fraction, f2: Fraction) -> Fraction {
+    let mut a = f1;
+    let mut b = f2;
     if f1.sign == f2.sign {
+       
+        if ((a.den*b.den > 2000000000) | (a.num*b.den + a.den*b.num > 2000000000)){
+            a = reduceFraction(a);
+            b = reduceFraction(b);
+        }
+        if ((a.den*b.den > 2000000000) | (a.num*b.den + a.den*b.num > 2000000000)){
+            a = Fraction{sign: a.sign, num: a.num/a.den, den: 1,};
+            b = Fraction{sign: b.sign, num: b.num/b.den, den: 1,};
+            
+        }
+        
         let fr = Fraction {
             sign: f1.sign,
-            num: (f1.num*f2.den + f2.num*f1.den),
-            den: f1.den*f2.den,
+            num: (a.num*b.den + b.num*a.den),
+            den: a.den*b.den,
         };
         fr
     }
     else {
         if ((f1.num*f2.den) > (f2.num*f1.den)){
+            if ((a.den*b.den > 2000000000) | (a.num*b.den - a.den*b.num > 2000000000)){
+                a = reduceFraction(a);
+                b = reduceFraction(b);
+            }
             let fr = Fraction {
                 sign: f1.sign,
-                num: (f1.num*f2.den-f2.num*f1.den),
-                den: f1.den*f2.den,
+                num: (a.num*b.den-b.num*a.den),
+                den: a.den*b.den,
             };
             fr
         }
         else {
+            if ((a.den*b.den > 2000000000) | (b.num*a.den - b.den*a.num > 2000000000)){
+                a = reduceFraction(a);
+                b = reduceFraction(b);
+            }
             let fr = Fraction {
                 sign: f2.sign,
-                num: (f2.num*f1.den-f1.num*f2.den),
-                den: f1.den*f2.den,
+                num: (b.num*a.den-a.num*b.den),
+                den: a.den*b.den,
             };
             fr
         }
@@ -238,5 +276,84 @@ fn isInteger(f: Fraction) -> bool {
     }
     else {
         false
+    }
+}
+
+
+// Returns the closest but smaller Integer to the Given Fraction, but typecast to Fraction for convenience
+fn floor(f: Fraction) -> Fraction {
+    let q = f.num/f.den;
+    if (q * f.den == f.num){
+        let fr = Fraction{
+            sign: f.sign,
+            num: f.num,
+            den: f.den,
+        };
+        fr
+    }
+    else {
+        if f.sign {
+            let fr = Fraction{
+                sign: f.sign,
+                num: q,
+                den: 1,
+            };
+            fr    
+        }
+        else {
+            let fr = Fraction{
+                sign: f.sign,
+                num: q + 1,
+                den: 1,
+            };
+            fr 
+        }
+        
+    }
+}
+
+// Returns the closest but greater Integer to the Given Fraction, but typecast to Fraction for convenience
+fn ceiling(f: Fraction) -> Fraction {
+    let q = f.num/f.den;
+    if (q * f.den == f.num){
+        let fr = Fraction{
+            sign: f.sign,
+            num: f.num,
+            den: f.den,
+        };
+        fr
+    }
+    else {
+        if f.sign {
+            let fr = Fraction{
+                sign: f.sign,
+                num: q + 1,
+                den: 1,
+            };
+            fr    
+        }
+        else {
+            let fr = Fraction{
+                sign: f.sign,
+                num: q,
+                den: 1,
+            };
+            fr 
+        }
+        
+    }
+}
+
+
+fn split(f: Fraction) -> (Fraction, Fraction) {
+    if f.sign {
+        let fl = floor(f);
+        let f2 = subtractFraction(f, fl);
+        (fl, f2) 
+    }
+    else {
+        let ce = ceiling(f);
+        let f2 = subtractFraction(ce, f);
+        (ce, f2) 
     }
 }
