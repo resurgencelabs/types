@@ -344,16 +344,45 @@ fn ceiling(f: Fraction) -> Fraction {
     }
 }
 
-
-fn split(f: Fraction) -> (Fraction, Fraction) {
+// Splits a Fraction to its Integral Part (Still Cast to Fraction) and Fractional Part
+fn split_approx(f: Fraction) -> (Fraction, Fraction) {
     if f.sign {
         let fl = floor(f);
         let f2 = subtractFraction(f, fl);
-        (fl, f2) 
+        let num_fl = (fl.num * 10000) as u56;
+        let den_fl = fl.den as u56;
+        let quo = (num_fl/den_fl) as u32;
+        let fl2 = Fraction{
+            sign: fl.sign,
+            num: quo,
+            den: 10000,
+        };
+        
+        if ((f.num < 2000000000) & (f.den < 2000000000)) {
+            (f2, fl)
+        }
+        else {
+            (f2, fl2) 
+        }
+        
     }
     else {
         let ce = ceiling(f);
         let f2 = subtractFraction(ce, f);
-        (ce, f2) 
+        let num_ce = (ce.num * 10000) as u56;
+        let den_ce = ce.den as u56;
+        let quo = (num_ce/den_ce) as u32;
+        let ce2 = Fraction{
+            sign: ce.sign,
+            num: quo,
+            den: 10000,
+        }; 
+        
+        if ((f.num < 2000000000) & (f.den < 2000000000)) {
+            (f2, ce)
+        }
+        else {
+            (f2, ce2) 
+        }
     }
 }

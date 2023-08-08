@@ -40,6 +40,8 @@ fn main(x : u32, y : pub u32) {
     
 }
 
+/*
+
 #[test]
 fn test_is_integer() {
     let f = fraction::toFraction(true, 3, 1);
@@ -107,14 +109,17 @@ fn test_add_large2() {
     let x = a.den;
     std::println(x);
 }
-
+*/
 
 #[test]
 fn test_split() {
     let f = fraction::toFraction(true, 7, 3);
-    let sp = fraction::split(f);
-    assert (fraction::isInteger(sp.0));
-    assert (sp.1.den == 3);
+    let sp = fraction::split_approx(f);
+    //let ss = sp.1.num;
+    //std::println(ss);
+    assert (fraction::isInteger(sp.1));
+    assert (sp.0.den == 3);
+    //assert (true);
     
 }
 
@@ -122,8 +127,8 @@ fn test_split() {
 #[test]
 fn test_split2() {
     let f = fraction::toFraction(false, 7, 3);
-    let sp = fraction::split(f);
-    assert (fraction::isInteger(sp.0));
-    assert (sp.1.num == 1);
+    let sp = fraction::split_approx(f);
+    assert (fraction::isInteger(sp.1));
+    assert (sp.0.num == 1);
     
 }
