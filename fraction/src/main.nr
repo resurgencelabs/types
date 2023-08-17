@@ -98,18 +98,31 @@ fn test_div_large() {
     assert (d.num < 4000000000);
     assert (d.den < 4000000000);
 }
+*/
+
+
+#[test]
+fn test_add() {
+    let f1 = fraction::toFraction(true, 3, 5);
+    let f2 = fraction::toFraction(true, 5, 3);
+    let a = fraction::addFraction(f1, f2);
+    
+    let x = a.num;
+    assert (x == 34);
+}
 
 #[test]
 fn test_add_large2() {
     let f1 = fraction::toFraction(true, 33333333, 5);
     let f2 = fraction::toFraction(true, 500000, 33333333);
     let a = fraction::addFraction(f1, f2);
-    assert (a.num < 2000000000);
-    assert (a.den < 2000000000);
-    let x = a.den;
+    
+    let x = a.num;
+    let y = a.den;
     std::println(x);
+    std::println(y);
 }
-*/
+
 
 #[test]
 fn test_split() {
@@ -117,8 +130,8 @@ fn test_split() {
     let sp = fraction::split_approx(f);
     //let ss = sp.1.num;
     //std::println(ss);
-    assert (fraction::isInteger(sp.1));
-    assert (sp.0.den == 3);
+    assert (fraction::isInteger(sp.0));
+    assert (sp.1.den == 3);
     //assert (true);
     
 }
@@ -128,7 +141,21 @@ fn test_split() {
 fn test_split2() {
     let f = fraction::toFraction(false, 7, 3);
     let sp = fraction::split_approx(f);
-    assert (fraction::isInteger(sp.1));
-    assert (sp.0.num == 1);
+    assert (fraction::isInteger(sp.0));
+    assert (sp.1.num == 1);
+    
+}
+
+
+#[test]
+fn test_mul_large2() {
+    let f1 = fraction::toFraction(true, 33333333, 5);
+    let f2 = fraction::toFraction(true, 500000, 77777);
+    let m = fraction::multiplyFraction(f1, f2);
+    
+    let p = m.num;
+    let q = m.den;
+    let lm = p/q;
+    assert (lm == 42857571);
     
 }

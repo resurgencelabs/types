@@ -34,27 +34,68 @@ fn invertFraction(f: Fraction) -> Fraction {
 }
 
 fn multiplyFraction(f1: Fraction, f2: Fraction) -> Fraction {
-    let mut a = f1;
-    let mut b = f2;
-    if ((f1.num*f2.num > 2000000000) | (f1.den*f2.den > 2000000000)) {
-        a = reduceFraction(a);
-        b = reduceFraction(b);
+    let mut an = f1.num as u84;
+    let mut ad = f1.den as u84;
+    let mut bn = f2.num as u84;
+    let mut bd = f2.den as u84;
+    let mut m = f1;
+    let mut n = f2;
+    
+
+    if ((an*bn > 2000000000) | (ad*bd > 2000000000)) {
+        m = reduceFraction(m);
+        n = reduceFraction(n);
     }
-    let mut c = a;
-    let mut d = b;
-    if ((a.num*b.num > 2000000000) | (a.den*a.den > 2000000000)) {
-        c = Fraction{ sign: a.sign, num: a.num, den: b.den};
-        d = Fraction{ sign: b.sign, num: b.num, den: a.den};
+
+    an = m.num as u84;
+    ad = m.den as u84;
+    bn = n.num as u84;
+    bd = n.den as u84;
+
+    
+    if ((an*bn > 2000000000) | (ad*bd > 2000000000)) {
+        let mut c = Fraction{ sign: m.sign, num: m.num, den: n.den};
+        let mut d = Fraction{ sign: n.sign, num: n.num, den: m.den};
         c = reduceFraction(c);
         d = reduceFraction(d);
+        an = c.num as u84;
+        ad = c.den as u84;
+        bn = d.num as u84;
+        bd = d.den as u84;
+    }
+
+    
+    let mut ddd = (an*bn)/(ad*bd);
+    let mut factor = 1 as u84;
+    for i in 1..5{
+        if ddd*10 < 2000000000 {
+            factor *= 10;
+            ddd = ddd * 10;
+        }
     }
     
-    let fr = Fraction {
-        sign: (c.sign == d.sign),
-        num: c.num*d.num,
-        den: c.den*d.den,
-    };
-    fr
+    if ((an*bn > 2000000000) | (ad*bd > 2000000000)) {
+        let np = ((an*bn*factor)/(ad*bd)) as u32;
+        std::println(ddd);
+        let fr = Fraction{
+            sign: (f1.sign == f2.sign),
+            num: np,
+            den: factor as u32,
+        };
+        fr
+        
+    }
+    else {
+        let fr = Fraction {
+            sign: (m.sign == n.sign),
+            num: m.num*n.num,
+            den: m.den*n.den,
+        };
+        fr
+        
+    }
+    
+    
 }
 
 fn divideFraction(f1: Fraction, f2: Fraction) -> Fraction {
@@ -104,51 +145,122 @@ fn reduceFraction(f: Fraction) -> Fraction {
 }
 
 fn addFraction(f1: Fraction, f2: Fraction) -> Fraction {
-    let mut a = f1;
-    let mut b = f2;
+    let mut an = f1.num as u84;
+    let mut ad = f1.den as u84;
+    let mut bn = f2.num as u84;
+    let mut bd = f2.den as u84;
+    let mut m = f1;
+    let mut n = f2;
+
     if f1.sign == f2.sign {
        
-        if ((a.den*b.den > 2000000000) | (a.num*b.den + a.den*b.num > 2000000000)){
-            a = reduceFraction(a);
-            b = reduceFraction(b);
+        if ((ad*bd > 2000000000) | ((an*bd + ad*bn) > 2000000000)){
+            m = reduceFraction(m);
+            n = reduceFraction(n);
         }
-        if ((a.den*b.den > 2000000000) | (a.num*b.den + a.den*b.num > 2000000000)){
-            a = Fraction{sign: a.sign, num: a.num/a.den, den: 1,};
-            b = Fraction{sign: b.sign, num: b.num/b.den, den: 1,};
-            
-        }
-        
-        let fr = Fraction {
-            sign: f1.sign,
-            num: (a.num*b.den + b.num*a.den),
-            den: a.den*b.den,
-        };
-        fr
-    }
-    else {
-        if ((f1.num*f2.den) > (f2.num*f1.den)){
-            if ((a.den*b.den > 2000000000) | (a.num*b.den - a.den*b.num > 2000000000)){
-                a = reduceFraction(a);
-                b = reduceFraction(b);
+        an = m.num as u84;
+        ad = m.den as u84;
+        bn = n.num as u84;
+        bd = n.den as u84;
+        if ((ad*bd > 2000000000) | ((an*bd + ad*bn) > 2000000000)){
+            let mut ddd = (an*bd + ad*bn)/(ad*bd);
+            let mut factor = 1 as u84;
+            for i in 1..5{
+                if ddd*10 < 2000000000 {
+                    ddd *= 10;
+                    factor *= 10;
+                }
             }
+            let np = (((an*bd + ad*bn)*factor)/(ad*bd)) as u32;
             let fr = Fraction {
                 sign: f1.sign,
-                num: (a.num*b.den-b.num*a.den),
-                den: a.den*b.den,
+                num: np,
+                den: factor as u32, 
             };
             fr
         }
         else {
-            if ((a.den*b.den > 2000000000) | (b.num*a.den - b.den*a.num > 2000000000)){
-                a = reduceFraction(a);
-                b = reduceFraction(b);
-            }
             let fr = Fraction {
-                sign: f2.sign,
-                num: (b.num*a.den-a.num*b.den),
-                den: a.den*b.den,
+                sign: f1.sign,
+                num: (m.num*n.den + n.num*m.den),
+                den: m.den*n.den,
             };
             fr
+        }
+        
+        
+    }
+    else {
+
+        if ((an*bd) > (bn*ad)){
+            if ((ad*bd > 2000000000) | ((an*bd - ad*bn) > 2000000000)){
+                m = reduceFraction(m);
+                n = reduceFraction(n);
+            }
+            an = m.num as u84;
+            ad = m.den as u84;
+            bn = n.num as u84;
+            bd = n.den as u84;
+            if ((ad*bd > 2000000000) | ((an*bd - ad*bn) > 2000000000)){
+                let mut ddd = (an*bd - ad*bn)/(ad*bd);
+                let mut factor = 1 as u84;
+                for i in 1..5{
+                    if ddd*10 < 2000000000 {
+                        ddd *= 10;
+                        factor *= 10;
+                    }
+                }
+                let np = (((an*bd - ad*bn)*factor)/(ad*bd)) as u32;
+                let fr = Fraction {
+                    sign: f1.sign,
+                    num: np,
+                    den: factor as u32, 
+                };
+                fr
+            }
+            else {
+                let fr = Fraction {
+                    sign: f1.sign,
+                    num: (m.num*n.den - n.num*m.den),
+                    den: m.den*n.den,
+                };
+                fr
+            }
+        }
+        else {
+            if ((ad*bd > 2000000000) | ((bn*ad - bd*an) > 2000000000)){
+                m = reduceFraction(m);
+                n = reduceFraction(n);
+            }
+            an = m.num as u84;
+            ad = m.den as u84;
+            bn = n.num as u84;
+            bd = n.den as u84;
+            if ((ad*bd > 2000000000) | ((bn*ad - bd*an) > 2000000000)){
+                let mut ddd = (bn*ad - bd*an)/(ad*bd);
+                let mut factor = 1 as u84;
+                for i in 1..5{
+                    if ddd*10 < 2000000000 {
+                        ddd *= 10;
+                        factor *= 10;
+                    }
+                }
+                let np = (((bn*ad - bd*an)*factor)/(ad*bd)) as u32;
+                let fr = Fraction {
+                    sign: f2.sign,
+                    num: np,
+                    den: factor as u32, 
+                };
+                fr
+            }
+            else {
+                let fr = Fraction {
+                    sign: f2.sign,
+                    num: (n.num*m.den - m.num*n.den),
+                    den: m.den*n.den,
+                };
+                fr
+            }
         }
     }
 }
@@ -359,10 +471,10 @@ fn split_approx(f: Fraction) -> (Fraction, Fraction) {
         };
         
         if ((f.num < 2000000000) & (f.den < 2000000000)) {
-            (f2, fl)
+            (fl, f2)
         }
         else {
-            (f2, fl2) 
+            (fl2, f2) 
         }
         
     }
@@ -379,10 +491,10 @@ fn split_approx(f: Fraction) -> (Fraction, Fraction) {
         }; 
         
         if ((f.num < 2000000000) & (f.den < 2000000000)) {
-            (f2, ce)
+            (ce, f2)
         }
         else {
-            (f2, ce2) 
+            (ce2, f2) 
         }
     }
 }
