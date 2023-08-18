@@ -267,32 +267,14 @@ fn addFraction(f1: Fraction, f2: Fraction) -> Fraction {
 
 
 fn subtractFraction(f1: Fraction, f2: Fraction) -> Fraction {
-    if f1.sign != f2.sign {
-        let fr = Fraction {
-            sign: f1.sign,
-            num: (f1.num*f2.den + f2.num*f1.den),
-            den: f1.den*f2.den,
-        };
-        fr
-    }
-    else {
-        if ((f1.num*f2.den) > (f2.num*f1.den)){
-            let fr = Fraction {
-                sign: f1.sign,
-                num: (f1.num*f2.den - f2.num*f1.den),
-                den: f1.den*f2.den,
-            };
-            fr
-        }
-        else {
-            let fr = Fraction {
-                sign: f2.sign,
-                num: (f2.num*f1.den - f1.num*f2.den),
-                den: f1.den*f2.den,
-            };
-            fr
-        }
-    }
+    let f3 = Fraction {
+        sign: !f2.sign,
+        num: f2.num,
+        den: f2.den,
+    };
+    let fr = addFraction(f1, f3);
+    
+    fr
 }
 
 

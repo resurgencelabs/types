@@ -111,6 +111,17 @@ fn test_add() {
     assert (x == 34);
 }
 
+
+#[test]
+fn test_add2() {
+    let f1 = fraction::toFraction(true, 3, 5);
+    let f2 = fraction::toFraction(false, 5, 3);
+    let a = fraction::addFraction(f1, f2);
+    
+    let x = a.num;
+    assert (x == 16);
+}
+
 #[test]
 fn test_add_large2() {
     let f1 = fraction::toFraction(true, 33333333, 5);
@@ -157,5 +168,21 @@ fn test_mul_large2() {
     let q = m.den;
     let lm = p/q;
     assert (lm == 42857571);
+    
+}
+
+
+
+#[test]
+fn test_mul2() {
+    let f1 = fraction::toFraction(true, 3, 5);
+    let f2 = fraction::toFraction(true, 5, 7);
+    let m = fraction::multiplyFraction(f1, f2);
+    
+    let p = m.num;
+    let q = m.den;
+    
+    assert (p == 15);
+    assert (q == 35);
     
 }
