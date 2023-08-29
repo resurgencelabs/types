@@ -186,3 +186,34 @@ fn test_mul2() {
     assert (q == 35);
     
 }
+
+
+
+
+#[test]
+fn test_sin() {
+    let f1 = fraction::toFraction(true, 3, 5);
+    
+    let res = fraction::sin(f1);
+    
+    let p = res.num;
+    let q = res.den;
+    
+    std::println(p);
+    std::println(q);
+    
+}
+
+#[test]
+fn test_cos() {
+    let f1 = fraction::toFraction(true, 0, 7);
+    
+    let res = fraction::cos(f1);
+    
+    let p = res.num;
+    let q = res.den;
+    
+    std::println(p);
+    std::println(q);
+    
+}

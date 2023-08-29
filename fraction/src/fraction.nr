@@ -76,7 +76,7 @@ fn multiplyFraction(f1: Fraction, f2: Fraction) -> Fraction {
     
     if ((an*bn > 2000000000) | (ad*bd > 2000000000)) {
         let np = ((an*bn*factor)/(ad*bd)) as u32;
-        std::println(ddd);
+        //std::println(ddd);
         let fr = Fraction{
             sign: (f1.sign == f2.sign),
             num: np,
@@ -479,4 +479,68 @@ fn split_approx(f: Fraction) -> (Fraction, Fraction) {
             (ce2, f2) 
         }
     }
+}
+
+fn sin(f: Fraction) -> Fraction {
+    let max = Fraction {
+        sign: true,
+        num: 44,
+        den: 7,
+    };
+    assert (compareFraction(max, f) <= 1);
+    assert (compareFraction(f, ZERO) <= 1);
+    let mut sum = ZERO;
+    let mut part_sum = ONE;
+    let mut fact: u32 = 1;
+    let mut k: u32 = 0;
+    for i in 1..10{
+        part_sum = multiplyFraction(part_sum, f);
+        fact = fact * (i as u32);
+        let j = i as u32;
+        if j % 2 == 1{
+            let fact_to_fract = toFraction(true, fact, 1);
+            let partial = divideFraction(part_sum, fact_to_fract);
+            if k % 2 == 0 {
+                sum = addFraction(sum, partial);
+            }
+            else {
+                sum = subtractFraction(sum, partial);
+            }
+            k += 1;
+        }
+    }
+    sum
+}
+
+
+
+fn cos(f: Fraction) -> Fraction {
+    let max = Fraction {
+        sign: true,
+        num: 44,
+        den: 7,
+    };
+    assert (compareFraction(max, f) <= 1);
+    assert (compareFraction(f, ZERO) <= 1);
+    let mut sum = ONE;
+    let mut part_sum = ONE;
+    let mut fact: u32 = 1;
+    let mut k: u32 = 0;
+    for i in 1..10{
+        part_sum = multiplyFraction(part_sum, f);
+        fact = fact * (i as u32);
+        let j = i as u32;
+        if j % 2 == 0{
+            let fact_to_fract = toFraction(true, fact, 1);
+            let partial = divideFraction(part_sum, fact_to_fract);
+            if k % 2 == 1 {
+                sum = addFraction(sum, partial);
+            }
+            else {
+                sum = subtractFraction(sum, partial);
+            }
+            k += 1;
+        }
+    }
+    sum
 }
