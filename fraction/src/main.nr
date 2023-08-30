@@ -192,13 +192,18 @@ fn test_mul2() {
 
 #[test]
 fn test_sin() {
-    let f1 = fraction::toFraction(true, 3, 5);
+    let f1 = fraction::toFraction(true, 43, 7);
     
     let res = fraction::sin(f1);
     
     let p = res.num;
     let q = res.den;
-    
+    let sig = res.sign;
+    let mut fl = 0;
+    if sig{
+        fl = 1;
+    }
+    std::println(fl);
     std::println(p);
     std::println(q);
     
@@ -206,10 +211,15 @@ fn test_sin() {
 
 #[test]
 fn test_cos() {
-    let f1 = fraction::toFraction(true, 0, 7);
+    let f1 = fraction::toFraction(true, 31, 7);
     
     let res = fraction::cos(f1);
-    
+    let sig = res.sign;
+    let mut fl = 0;
+    if sig{
+        fl = 1;
+    }
+    std::println(fl);
     let p = res.num;
     let q = res.den;
     

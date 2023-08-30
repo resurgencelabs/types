@@ -33,6 +33,16 @@ fn invertFraction(f: Fraction) -> Fraction {
     fr
 }
 
+
+fn signChangeFraction(f: Fraction) -> Fraction {
+    let fr = Fraction {
+        sign: !f.sign,
+        num: f.num,
+        den: f.den,
+    };
+    fr
+}
+
 fn multiplyFraction(f1: Fraction, f2: Fraction) -> Fraction {
     let mut an = f1.num as u84;
     let mut ad = f1.den as u84;
@@ -481,14 +491,51 @@ fn split_approx(f: Fraction) -> (Fraction, Fraction) {
     }
 }
 
-fn sin(f: Fraction) -> Fraction {
+
+// an approximation of the Sine function using the Taylor series
+// since pi is not "exactly" equal to 22/7, the results are only an approximation (4 decimal digits)
+fn sin(x: Fraction) -> Fraction {
     let max = Fraction {
         sign: true,
         num: 44,
         den: 7,
     };
-    assert (compareFraction(max, f) <= 1);
-    assert (compareFraction(f, ZERO) <= 1);
+    assert (compareFraction(max, x) <= 1);
+    assert (compareFraction(x, ZERO) <= 1);
+    let mut f = x;
+    let mut flag = true;
+    let quart = Fraction {
+        sign: true,
+        num: 11,
+        den: 7,
+    };
+    let mid = Fraction {
+        sign: true,
+        num: 22,
+        den: 7,
+    };
+    let th_quart = Fraction {
+        sign: true,
+        num: 33,
+        den: 7,
+    };
+    if (compareFraction(max, x) <= 1){
+        f = subtractFraction(max, x);
+        flag = false;
+    }
+    if (compareFraction(th_quart, x) <= 1){
+        let f2 = subtractFraction(th_quart, x);
+        f = subtractFraction(quart, f2);
+        flag = false;
+    }
+    if (compareFraction(mid, x) <= 1){
+        f = subtractFraction(mid, x);
+        flag = true;
+    }
+    if (compareFraction(quart, x) <= 1){
+        f = x;
+        flag = true;
+    }
     let mut sum = ZERO;
     let mut part_sum = ONE;
     let mut fact: u32 = 1;
@@ -509,24 +556,62 @@ fn sin(f: Fraction) -> Fraction {
             k += 1;
         }
     }
+    if !flag {
+        sum = signChangeFraction(sum);
+    }
     sum
 }
 
 
-
-fn cos(f: Fraction) -> Fraction {
+// an approximation of the Cosine function using the Taylor series
+// since pi is not "exactly" equal to 22/7, the results are only an approximation (4 decimal digits)
+fn cos(x: Fraction) -> Fraction {
     let max = Fraction {
         sign: true,
         num: 44,
         den: 7,
     };
-    assert (compareFraction(max, f) <= 1);
-    assert (compareFraction(f, ZERO) <= 1);
+    assert (compareFraction(max, x) <= 1);
+    assert (compareFraction(x, ZERO) <= 1);
+    let mut f = x;
+    let mut flag = true;
+    let quart = Fraction {
+        sign: true,
+        num: 11,
+        den: 7,
+    };
+    let mid = Fraction {
+        sign: true,
+        num: 22,
+        den: 7,
+    };
+    let th_quart = Fraction {
+        sign: true,
+        num: 33,
+        den: 7,
+    };
+    if (compareFraction(max, x) <= 1){
+        f = subtractFraction(max, x);
+        flag = true;
+    }
+    if (compareFraction(th_quart, x) <= 1){
+        let f2 = subtractFraction(th_quart, x);
+        f = subtractFraction(quart, f2);
+        flag = false;
+    }
+    if (compareFraction(mid, x) <= 1){
+        f = subtractFraction(mid, x);
+        flag = false;
+    }
+    if (compareFraction(quart, x) <= 1){
+        f = x;
+        flag = true;
+    }
     let mut sum = ONE;
     let mut part_sum = ONE;
     let mut fact: u32 = 1;
     let mut k: u32 = 0;
-    for i in 1..10{
+    for i in 1..12{
         part_sum = multiplyFraction(part_sum, f);
         fact = fact * (i as u32);
         let j = i as u32;
@@ -541,6 +626,9 @@ fn cos(f: Fraction) -> Fraction {
             }
             k += 1;
         }
+    }
+    if !flag{
+        sum = signChangeFraction(sum);
     }
     sum
 }
