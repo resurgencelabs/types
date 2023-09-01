@@ -287,6 +287,48 @@ fn subtractFraction(f1: Fraction, f2: Fraction) -> Fraction {
     fr
 }
 
+fn powerSmallFraction(f: Fraction, k: u8) -> Fraction {
+    assert (k >= 1);
+    assert (k < 10);
+    assert ((f.num * 7) <= (11 * f.den));
+    let mut n = f.num as u95;
+    let mut d = f.den as u95;
+    if f.den > 1000 {
+        n = (n*1000)/d;
+        d = 1000;
+    }
+    if n == 0{
+        let fr = Fraction {
+            sign: true,
+            num: 0,
+            den: 1,
+        };
+        fr
+    }
+    else {
+        let mut nprod: u95 = 1;
+        let mut dprod: u95 = 1;
+        let mut s = true;
+        if ((!f.sign) & (k % 2 == 1)){
+            s = false;
+        }
+        for i in 1..10 {
+            if i as u8 <= k {
+                nprod = nprod * n;
+                dprod = dprod * d;
+            }
+        }
+        let new_num = ((nprod*10000)/dprod) as u32;
+        let fr = Fraction {
+            sign: s,
+            num: new_num,
+            den: 10000,
+        };
+        fr
+
+    }
+}
+
 
 // if a > b return 1
 // if a < b return 2
@@ -537,25 +579,18 @@ fn sin(x: Fraction) -> Fraction {
         flag = true;
     }
     let mut sum = ZERO;
-    let mut part_sum = ONE;
-    let mut fact: u32 = 1;
-    let mut k: u32 = 0;
-    for i in 1..10{
-        part_sum = multiplyFraction(part_sum, f);
-        fact = fact * (i as u32);
-        let j = i as u32;
-        if j % 2 == 1{
-            let fact_to_fract = toFraction(true, fact, 1);
-            let partial = divideFraction(part_sum, fact_to_fract);
-            if k % 2 == 0 {
-                sum = addFraction(sum, partial);
-            }
-            else {
-                sum = subtractFraction(sum, partial);
-            }
-            k += 1;
-        }
-    }
+    
+    let t1 = f;
+    let t2 = divideFraction(powerSmallFraction(f, 3), toFraction(true, 6, 1));
+    let t3 = divideFraction(powerSmallFraction(f, 5), toFraction(true, 120, 1));
+    let t4 = divideFraction(powerSmallFraction(f, 7), toFraction(true, 5040, 1));
+    let t5 = divideFraction(powerSmallFraction(f, 9), toFraction(true, 362880, 1));
+
+    let s1 = addFraction(addFraction(t3, t5), t1);
+    let s2 = addFraction(t2, t4);
+
+    sum = subtractFraction(s1, s2);
+
     if !flag {
         sum = signChangeFraction(sum);
     }
@@ -608,6 +643,7 @@ fn cos(x: Fraction) -> Fraction {
         flag = true;
     }
     let mut sum = ONE;
+    /*
     let mut part_sum = ONE;
     let mut fact: u32 = 1;
     let mut k: u32 = 0;
@@ -626,7 +662,17 @@ fn cos(x: Fraction) -> Fraction {
             }
             k += 1;
         }
-    }
+    }*/
+    let t1 = toFraction(true, 1, 1);
+    let t2 = divideFraction(powerSmallFraction(f, 2), toFraction(true, 2, 1));
+    let t3 = divideFraction(powerSmallFraction(f, 4), toFraction(true, 24, 1));
+    let t4 = divideFraction(powerSmallFraction(f, 6), toFraction(true, 720, 1));
+    let t5 = divideFraction(powerSmallFraction(f, 8), toFraction(true, 40320, 1));
+
+    let s1 = addFraction(addFraction(t3, t5), t1);
+    let s2 = addFraction(t2, t4);
+
+    sum = subtractFraction(s1, s2);
     if !flag{
         sum = signChangeFraction(sum);
     }

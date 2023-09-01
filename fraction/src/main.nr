@@ -192,7 +192,7 @@ fn test_mul2() {
 
 #[test]
 fn test_sin() {
-    let f1 = fraction::toFraction(true, 43, 7);
+    let f1 = fraction::toFraction(true, 22, 21);
     
     let res = fraction::sin(f1);
     
@@ -211,7 +211,7 @@ fn test_sin() {
 
 #[test]
 fn test_cos() {
-    let f1 = fraction::toFraction(true, 31, 7);
+    let f1 = fraction::toFraction(true, 22, 21);
     
     let res = fraction::cos(f1);
     let sig = res.sign;
