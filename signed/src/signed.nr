@@ -150,6 +150,20 @@ fn cubeSigned(s: Signed) -> Signed {
     
 }
 
+// Obtain said Signed Integer raised to a given power. Unconstrained
+unconstrained fn powerSigned(s: Signed, k: u32) -> Signed {
+    assert (k > 0);
+    let mut val = 1;
+    for i in 1..(k+1) {
+        val = val * s.value;
+    }
+    let sn = Signed {
+        sign: ((k % 2 == 0) | (s.sign)),
+        value: val,
+    };
+    sn
+}
+
 fn negativeSigned(s: Signed) -> Signed {
     let sn = Signed{
         sign: !s.sign,
